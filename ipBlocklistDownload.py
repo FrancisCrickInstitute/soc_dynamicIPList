@@ -93,4 +93,3 @@ except requests.exceptions.RequestException as error:
     master_log.append(f"Error occurred during file download: {error}")
     master_status = False
 
-ipdb.set_trace()
