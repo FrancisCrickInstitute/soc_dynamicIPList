@@ -1,7 +1,7 @@
 import ipdb
 import json
+import csv
 import os
-import pandas as pd
 import requests
 import datetime
 from azure.identity import EnvironmentCredential # Used to quiry host system and get Credential Informatiob
@@ -93,3 +93,18 @@ except requests.exceptions.RequestException as error:
     master_log.append(f"Error occurred during file download: {error}")
     master_status = False
 
+try:
+    with open("Dynamic_IP_BlockList.csv", "r") as csv_file, open("Dynamic_IP_BlockList.txt", "w") as txt_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            txt_file.write(row['IP'] + "\n")
+except FileNotFoundError:
+    master_log.append("The file 'Dynamic_IP_BlockList.csv' was not found.")
+    master_status = False
+except Exception as error:
+    master_log.append(f"An error occurred while reading the CSV file: {error}")
+    master_status = False
+
+with open("master_log.txt", "w") as log_file:
+    for line in master_log:
+        log_file.write(line + "\n")

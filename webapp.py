@@ -3,7 +3,7 @@ import os
 
 app = Flask(__name__)
 
-FILE_PATH = "Dynamic_IP_BlockList.csv"
+FILE_PATH = "Dynamic_IP_BlockList.txt"
 
 print("Looking for file at:", os.path.abspath(FILE_PATH))
 print("File exists:", os.path.exists(FILE_PATH))
@@ -13,7 +13,7 @@ print("File exists:", os.path.exists(FILE_PATH))
 def home():
     return "Flask is working"
 
-@app.route("/Dynamic_IP_BlockList.csv", methods=["GET"])
+@app.route("/Dynamic_IP_BlockList.txt", methods=["GET"])
 def download_file():
     if not os.path.exists(FILE_PATH):
         return abort(404, description="File not found")
@@ -22,7 +22,7 @@ def download_file():
         send_file(
             FILE_PATH,
             as_attachment=True,
-            download_name="Dynamic_IP_BlockList.csv",
+            download_name="Dynamic_IP_BlockList.txt",
             conditional=False
         )
     )

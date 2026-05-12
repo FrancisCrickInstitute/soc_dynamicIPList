@@ -6,7 +6,7 @@ __pycache__/
 # Custom
 *.json
 *.csv
-*log.txt
+*.txt
 
 # C extensions
 *.so
