@@ -16,6 +16,12 @@ print("Domain file exists:", os.path.exists(DOMAIN_FILE_PATH))
 def home():
     return "Flask is working"
 
+
+FILES = {
+    "Dynamic_IP_BlockList.txt": IP_FILE_PATH,
+    "Dynamic_Domain_BlockList.txt": DOMAIN_FILE_PATH
+}
+
 @app.route("/<filename>", methods=["GET"])
 def download_file(filename):
     file_path = FILES.get(filename)
