@@ -41,7 +41,7 @@ def download_file(filename):
     response.headers["Cache-Control"] = "no-store"
     return response
 
-
+'''
 def download_file():
     print("DOWNLOAD ROUTE HIT")
 
@@ -50,6 +50,6 @@ def download_file():
         return abort(404, description="File not found")
 
     return send_file(FILE_PATH, as_attachment=True)
-
+'''
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6000)
