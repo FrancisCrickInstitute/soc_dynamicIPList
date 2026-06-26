@@ -3,33 +3,38 @@ import os
 
 app = Flask(__name__)
 
-FILE_PATH = "Dynamic_IP_BlockList.txt"
+IP_FILE_PATH = "Dynamic_IP_BlockList.txt"
+DOMAIN_FILE_PATH = "Dynamic_Domain_BlockList.txt"
 
-print("Looking for file at:", os.path.abspath(FILE_PATH))
-print("File exists:", os.path.exists(FILE_PATH))
+print("Looking for IP file at:", os.path.abspath(IP_FILE_PATH))
+print("IP file exists:", os.path.exists(IP_FILE_PATH))
+print("Looking for Domain file at:", os.path.abspath(DOMAIN_FILE_PATH))
+print("Domain file exists:", os.path.exists(DOMAIN_FILE_PATH))
 
 
 @app.route("/")
 def home():
     return "Flask is working"
 
-@app.route("/Dynamic_IP_BlockList.txt", methods=["GET"])
-def download_file():
-    if not os.path.exists(FILE_PATH):
+@app.route("/<filename>", methods=["GET"])
+def download_file(filename):
+    file_path = FILES.get(filename)
+
+    if not file_path or not os.path.exists(file_path):
         return abort(404, description="File not found")
 
     response = make_response(
         send_file(
-            FILE_PATH,
+            file_path,
             as_attachment=True,
-            download_name="Dynamic_IP_BlockList.txt",
+            download_name=filename,
             conditional=False
         )
     )
 
-    # Optional cache control (still useful)
     response.headers["Cache-Control"] = "no-store"
     return response
+
 
 def download_file():
     print("DOWNLOAD ROUTE HIT")
