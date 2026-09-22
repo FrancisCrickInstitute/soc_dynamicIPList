@@ -51,10 +51,6 @@ try:
 except HttpResponseError as error:
     log.error("Vault HTTP error: %s", error)
 
-# Get Secrets from Azure Keyvault
-abuseApiUrl = client.get_secret("abuseIpdbApiUrl").value
-abuseApiKey = client.get_secret("abuseIpdbApiKey").value
-
 # Function to download IP Blocklist from Crowdstrike
 def download_IP_blocklist(client):
 
@@ -67,7 +63,7 @@ def download_IP_blocklist(client):
 
     # Generate Auth Token
     auth_headers = {
-    'Content-type': 'application/x-www-form-urlencoded', 
+    'Content-type': 'application/x-www-form-urlencoded',
     'accept': 'application/json'
     }
 
@@ -146,7 +142,7 @@ def abuseipdb_check(client, ips):
             response.raise_for_status()
             log.info(f"Checking for IP: {ip}, Status Code: {response.status_code}")
             info = response.json()
-     
+
             if 'data' in info.keys():
                 entry = {}
                 entry['ip'] = ip
